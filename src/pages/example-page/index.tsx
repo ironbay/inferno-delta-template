@@ -1,32 +1,27 @@
 import './styles.css'
 import * as createElement from 'inferno-create-element'
 import * as Component from 'inferno-component'
+import Delta from "../../data/delta";
+import Dynamic from '../../data/dynamic'
 
 import Node from '../../components/node'
 
 interface IProps {
-}
-
-const SAMPLE_DATA = {
-	hello: "world",
-	welcome: {
-		to: {
-			typescript: "!",
-			it: {
-				is: "pretty",
-				great: "!"
-			}
-		}
-	}
+	delta: Delta
 }
 
 export default class ExamplePage extends Component<IProps, any> {
 	constructor() {
 		super()
-		this.state = SAMPLE_DATA
+		this.state = {}
 	}
 	render() {
-		const { state } = this
-		return <Node label='state' path={[]} data={state} />
+		const { delta } = this.props
+		return <Node onEdit={this.edit} label='data' path={[]} data={delta.store.get([])} />
+	}
+	edit = (path: Array<string>, value: any) => {
+		this.props.delta.mutation({
+			$merge: Dynamic.put({}, path, value)
+		})
 	}
 }
