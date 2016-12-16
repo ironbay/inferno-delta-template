@@ -1,6 +1,5 @@
-## Inferno Typescript Template
-This is a lightweight template for getting started with the awesome InfernoJS library using Typescript.  Those of you coming from React should find the project structure familiar.
-
+## Inferno Delta Template
+This is an implementation of the Interceptor Pattern for building frontend applications that integrate with Delta - a realtime, programmable database. Included is a minimal framework that automatically syncs state between the server and client in realtime via websocket. This eliminates the need to write any code typically associated with fetching data from the backend and maintaining a local state (bye bye reducers and dispatchers). All you have to do is build the UI
 
 ### Usage
 This project uses Webpack for managing the build pipeline
@@ -16,3 +15,6 @@ Builds the project to `./build`
 ```
 npm run build
 ```
+
+### Getting Started
+TODO
