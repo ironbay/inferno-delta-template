@@ -1,3 +1,4 @@
+import './reset.css'
 import './styles.css'
 import { DELTA_URL } from '../../constants'
 import * as createElement from 'inferno-create-element'
@@ -35,14 +36,14 @@ export default class Root extends Component<IRootProps, any> {
 		if (this._delta.store.get(['connection']) === 'unknown')
 			return false
 		return (
-			<div className='root'>
+			<Container className='root'>
 			{
 				Inferno.createVNode(5, children.props.component, {
 					history,
 					delta: this._delta,
 				}, null)
 			}
-			</div>
+			</Container>
 		)
 	}
 }
