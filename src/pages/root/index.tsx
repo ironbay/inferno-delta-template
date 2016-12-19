@@ -7,6 +7,7 @@ import * as Inferno from 'inferno'
 import * as Interceptor from '../../data/interceptors'
 import { history } from '../../routes'
 import Delta from '../../data/delta'
+import Container from '../../components/container'
 
 interface IRootProps {
 	children: any
