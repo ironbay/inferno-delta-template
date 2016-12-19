@@ -34,6 +34,21 @@ export default class Dynamic {
 		return Dynamic.get(child, tail)
 	}
 
+	static flatten(input: Object, path = new Array<string>()): Array<Atom> {
+		return Object
+			.keys(input)
+			.reduce((collect, key): Array<Atom> => {
+				const value = input[key]
+				const next = [...path, key]
+				if (value instanceof Object && Object.keys(value).length > 0)
+					return [...Dynamic.flatten(value, next), ...collect]
+				return [{
+					path: next,
+					value: value,
+				}]
+			}, new Array<Atom>())
+	}
+
 	static atoms(input: Object, path = new Array<string>()): Array<Atom> {
 		switch (input instanceof Object) {
 			case false:

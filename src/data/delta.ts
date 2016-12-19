@@ -113,12 +113,33 @@ export default class Delta {
 	}
 
 	public async query(query: Object) {
+		const pending =
+			Dynamic
+			.flatten(query)
+			.map(({path}) => {
+				if (path.slice(-1)[0][0] === '$')
+					path.pop()
+				return path
+			})
+			.reduce((collect, path) => {
+				return Dynamic.put(collect, path, 1)
+			}, {})
+		this.store.apply({
+			$merge: {
+				pending: pending,
+			}
+		})
 		const result = await this.send(
 			'delta.query',
 			query,
 			1,
 		)
 		this.store.apply(result)
+		this.store.apply({
+			$delete: {
+				pending: pending,
+			}
+		})
 		return result
 	}
 
