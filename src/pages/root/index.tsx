@@ -1,5 +1,6 @@
 import './reset.css'
 import './styles.css'
+import './reset.css'
 import { DELTA_URL } from '../../constants'
 import * as createElement from 'inferno-create-element'
 import * as Component from 'inferno-component'
@@ -26,7 +27,10 @@ export default class Root extends Component<IRootProps, any> {
 		Interceptor.bind(delta)
 	}
 	componentDidMount() {
-		this._delta.store.changed(() => this.forceUpdate())
+		this._delta.store.changed(debounce(() => {
+			console.log('Rendering')
+			this.forceUpdate()
+		}, 100))
 		this.componentWillReceiveProps(this.props)
 	}
 	componentWillReceiveProps(next: IRootProps) {
@@ -46,5 +50,25 @@ export default class Root extends Component<IRootProps, any> {
 			}
 			</Container>
 		)
+	}
+}
+
+function debounce(func: Function, wait: number, immediate?: boolean): () => void {
+	let timeout: number;
+	return function() {
+		let context = this,
+		args = arguments,
+		later = (): void => {
+			timeout = null;
+			if (!immediate) {
+				func.apply(context, args);
+			}
+		},
+		callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) {
+		    func.apply(context, args);
+		}
 	}
 }
