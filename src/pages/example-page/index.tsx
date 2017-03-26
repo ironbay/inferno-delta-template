@@ -16,6 +16,7 @@ export default class ExamplePage extends Component<IProps, any> {
 		this.state = {}
 	}
 	render() {
+		console.log(this.props)
 		const { delta } = this.props
 		return <Node onEdit={this.edit} label='data' path={[]} data={delta.store.get([])} />
 	}

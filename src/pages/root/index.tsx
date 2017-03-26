@@ -40,13 +40,15 @@ export default class Root extends Component<IRootProps, any> {
 		const { children, params } = this.props
 		if (this._delta.store.get(['connection']) === 'unknown')
 			return false
+		console.log(this._delta)
 		return (
 			<Container className='root'>
 			{
-				Inferno.createVNode(5, children.props.component, {
+				Inferno.cloneVNode(children, {
 					history,
 					delta: this._delta,
-				}, null)
+
+				})
 			}
 			</Container>
 		)
